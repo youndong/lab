@@ -6,11 +6,13 @@ using namespace std;
 class WeatherData;
 class DisplayElement;
 
+/* interface */
 class Observer {
 public:
 	virtual void update(float temp, float humidity, float pressure) = 0;
 };
 
+/* interface */
 class Subject {
 public:
 	virtual void registerObserver(Observer *o) = 0;
@@ -18,7 +20,7 @@ public:
 	virtual void notifyObservers() = 0;
 };
 
-
+/* interface */
 class DisplayElement {
 public:
 	virtual void display() = 0;
