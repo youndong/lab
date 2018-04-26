@@ -161,6 +161,7 @@ public:
 		delete forecastDisplay;
 
 		weatherData->setMeasurements(81, 75, 30.1f);
+		weatherData->setMeasurements(83, 65, 29.8f);
 
 		delete statisticsDisplay;
 	}
