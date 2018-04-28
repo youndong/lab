@@ -261,6 +261,9 @@ public:
 
 		Pizza *pizza = nyStore->orderPizza("cheese");
 		cout << "Ethan ordered a " << pizza->getName() << endl;
+		
+		delete nyStore;
+		delete pizza;
 	}
 };
 
