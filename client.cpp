@@ -26,7 +26,8 @@ SampleClient::SampleClient(DBus::Connection& conn, const char* path, const char*
 
 void SampleClient::Changed(const bool& new_value) 
 {
-	cout << "Service's property \"Bar\" is changed to " << Bar() << endl;
+	// Do something
+	// cout << "Service's property \"Bar\" is changed to " << Bar() << endl;
 }
 
 /////////////////////

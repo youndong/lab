@@ -36,8 +36,6 @@ SampleService::~SampleService() {
 }
 
 void SampleService::Frobate(const int32_t& foo /*in*/, std::string& bar/*out*/, std::map< uint32_t, std::string >& baz/*out*/) {
-	cout << "Called Frobate()" << endl;
-	cout << "\tfirst (int32_t) 	: " << foo << endl;
 
     baz.insert(make_pair(0, "Hi~"));
     baz.insert(make_pair(1, "Bye~"));
@@ -53,10 +51,12 @@ void SampleService::Frobate(const int32_t& foo /*in*/, std::string& bar/*out*/, 
 ::DBus::Variant SampleService::Bazify(const ::DBus::Struct< int32_t, int32_t, uint32_t >& bar) {
 	::DBus::Variant retVar;
 
+	/*
 	cout << "Called Bazify()" << endl;
 	cout << "\tfirst (int32_t) 	: " << (int32_t)bar._1 << endl;
 	cout << "\tseond (int32_t)	: " << (int32_t)bar._2 << endl;
 	cout << "\tthird (uint32_t)	: " << (uint32_t)bar._3 << endl;
+	*/
 
 	::DBus::MessageIter m = retVar.writer();
  	m.append_string("Hi, I'm Bazify from SampleService ..");
@@ -65,14 +65,17 @@ void SampleService::Frobate(const int32_t& foo /*in*/, std::string& bar/*out*/, 
 }
 void SampleService::Mogrify(const ::DBus::Struct< int32_t, int32_t, std::vector< ::DBus::Variant > >& bar) {
 
+	/*
 	cout << "Called Mogrify()" << endl;
 	cout << "\tfirst (int32_t) 			: " << (int32_t)bar._1 << endl;
 	cout << "\tseond (int32_t)			: " << (int32_t)bar._2 << endl;
 	cout << "\tthird (vector of variant): " << endl;
+	
 	for(auto iter = bar._3.begin(); iter != bar._3.end(); iter++) {
 	    ::DBus::MessageIter m = (*iter).reader();
 		cout << "\t\tvariant	: " << m.get_string() << endl;
 	}
+	*/
 }
  
 void SampleService::on_set_property
@@ -80,15 +83,14 @@ void SampleService::on_set_property
 {
 	if (property == "Bar")
 	{
-		// this->Bar = value;
+		/*
 		uint8_t _value = value;
 		cout << "property value is changed : " << _value << endl;
-		
+		*/
+
 		Changed(true);
 	}
 }
-
-
 
  //////////////////////////////
 
