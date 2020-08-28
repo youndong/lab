@@ -96,7 +96,6 @@ void SampleClient::Changed(const bool& new_value)
 	cout << "Service's property \"Bar\" is changed to " << Bar() << endl;
 }
 
-/////////////////////
 
 //////////////////////////////////////////////
 
