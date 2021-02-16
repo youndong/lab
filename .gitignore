@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+/.vs/slnx.sqlite
+/.vs/ProjectSettings.json
+/.vs/design-patterns/v16/ipch/AutoPCH/eca400845cd01eb9/ABSTRACT_FACTORY.ipch
+/.vs/design-patterns/v16/ipch/AutoPCH/c1fec85140a2ccf3/VCTMP1296_401045.SINGLETON.6FA1CDA8.ipch
+/.vs/design-patterns/v16/ipch/AutoPCH/99a0a607f8c039d/DECORATOR.ipch
+/.vs/design-patterns/v16/ipch/AutoPCH/97244ab67b4e7b69/SINGLETON.ipch
+/.vs/design-patterns/v16/ipch/AutoPCH/7b431153b7cbb561/VCTMP1296_450302.SINGLETON.6FA1CDA8.ipch
+/.vs/design-patterns/v16/Browse.VC.opendb
+/.vs/design-patterns/v16/Browse.VC.db-wal
+/.vs/design-patterns/v16/Browse.VC.db-shm
+/.vs/design-patterns/v16/Browse.VC.db
