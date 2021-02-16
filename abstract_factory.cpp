@@ -1,3 +1,4 @@
+// design pattern : abstract factory
 #include <iostream>
 #include <string>
 #include <vector>
