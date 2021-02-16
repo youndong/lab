@@ -1,3 +1,4 @@
+// design patterns : singleton
 #include <iostream>
 #include <string>
 #include <thread>
