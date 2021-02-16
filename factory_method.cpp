@@ -1,3 +1,4 @@
+// factory method pattern
 #include <iostream>
 #include <string>
 #include <vector>
