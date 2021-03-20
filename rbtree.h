@@ -17,6 +17,11 @@
 #ifndef	_LINUX_RBTREE_H
 #define	_LINUX_RBTREE_H
 
+
+// Additional codes for removing Linux kernel dependencies
+// To support the c++ compiler such as g++, I modified some functions that used a parameter named "new".
+// BEGIN 
+
 #ifndef NULL
 #define	NULL 0
 #endif // !NULL
@@ -43,12 +48,13 @@ do {									\
 	__WRITE_ONCE(x, val);						\
 } while (0)
 
-
 #define offsetof(TYPE, MEMBER)  ((size_t)&((TYPE *)0)->MEMBER)
 
 #define container_of(ptr, type, member) ({          \
 	const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
 	(type *)( (char *)__mptr - offsetof(type,member) );})
+
+// END : Additional codes for removing Linux kernel dependencies
 
 struct rb_node {
 	unsigned long  __rb_parent_color;

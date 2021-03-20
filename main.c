@@ -76,8 +76,8 @@ int my_insert(struct rb_root* root, SAWON* s)
         else
             return 0;
     }
-    rb_link_node(&s->node, parent, p);  // nodeì ì‚½ìž…
-    rb_insert_color(&s->node, root);   // ë°¸ëŸ°ìŠ¤ë¥¼ ë§žì¶¤
+    rb_link_node(&s->node, parent, p);  
+    rb_insert_color(&s->node, root);   
     return 1;
 }
 
