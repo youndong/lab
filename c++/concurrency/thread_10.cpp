@@ -154,12 +154,13 @@ void TEST_10() {
 
 int main()
 {
-    //TEST_01();
-    //TEST_02();
+    TEST_01();
+    TEST_02();
     TEST_03();
     TEST_04();
     TEST_05();
-    //TEST_10();
+    TEST_10();
+
     return 0;
 }
 
