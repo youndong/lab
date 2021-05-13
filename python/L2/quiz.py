@@ -42,3 +42,13 @@ for i in MultiIterator(20,3):
 print()
 print()
 
+# Q4
+print("Q4 : Generator")
+f_name = "./files/words.txt"
+with open(f_name) as ifp:
+    # lines = ifp.readlines()
+    lines = ifp.read().split('\n')
+    for line in lines:
+        print(line)
+print()
+
