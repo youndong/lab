@@ -67,3 +67,68 @@ for email in emails:
         print(email, ": False")
 
 print()
+
+# Q6
+print("Q6 : Matrix using numpy")
+import numpy as np
+data = np.array([[4,2,7,11,8,80],
+                [9,22,73,41,57,20],
+                [47,29,87,41,33,92],
+                [3,47,44,14,62,80],
+                [34,61,1,51,8,34]])
+
+print('a. max = ', data.max())
+print('b. sum = ', data.sum(axis=1))
+print('c. mean = ', data.mean(axis=0))
+
+print()
+
+
+
+# Q7
+print("Q7 : Continent")
+
+import csv
+f_name = "./files/UN.txt"
+f = open(f_name, 'r', encoding='utf-8')
+rdr = csv.reader(f)
+data = []
+for line in rdr:
+    data.append(line)
+
+continent = input('Enter the name of a continent:')
+
+for country in data:
+    if country[1].lower() == continent.lower():
+        print(country[0])
+#             print("True" if strData[i].find("python") > -1 else "False")
+
+f.close()
+print()
+
+
+# Q8
+print("Q8 : String search")
+
+
+strData = ['good item', 'hello word', 'python programming', 'real data', 'script python']
+
+
+def search_coroutine():
+    try:
+        while True:
+            x = (yield)
+            print("True" if strData[i].find("python") > -1 else "False")
+
+    except GeneratorExit:
+        print()
+        print("coroutine end")
+
+
+co = search_coroutine()
+next(co)
+
+for i in range(len(strData)):
+    co.send(i)
+
+co.close()
