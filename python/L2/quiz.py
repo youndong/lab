@@ -52,3 +52,18 @@ with open(f_name) as ifp:
         print(line)
 print()
 
+# Q5
+print("Q5 : email checker")
+
+import re
+regex = re.compile('[A-Za-z0-9\._+-]+@[A-Za-z0-9\._+-]+\.(com|org|edu|net|kr|info)') # regex pattern described in textbooks
+# regex = re.compile('^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$') # More(?) accurate regex pattern
+emails = ['python@mail.example.com', 'python+kr@example.com', 'python-dojang@example.co.kr', 'python_10@example.info', 'python.dojang@e-xample.com', '@example.com', 'python@example', 'python@example-com']
+
+for email in emails:
+    if (regex.match(email) != None):
+        print(email, ": True")
+    else:
+        print(email, ": False")
+
+print()
