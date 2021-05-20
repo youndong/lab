@@ -4,7 +4,10 @@
 #include <signal.h>
 #include <unistd.h>
 
-#include "sample-adaptor.h"
+#include "service_adaptor.h"
+#include "flatbuffers/flatbuffers.h"
+#include "payload_generated.h"
+#include "result_generated.h"
 
 using namespace std;
 
@@ -19,9 +22,10 @@ public:
 	virtual ~SampleService();
 
 public:
-	virtual void Frobate(const int32_t& foo, std::string& bar, std::map< uint32_t, std::string >& baz);
-    virtual ::DBus::Variant Bazify(const ::DBus::Struct< int32_t, int32_t, uint32_t >& bar);
-    virtual void Mogrify(const ::DBus::Struct< int32_t, int32_t, std::vector< ::DBus::Variant > >& bar);
+    virtual std::vector< uint8_t > fbs(const std::vector< uint8_t >& payload);
+	virtual void Method_A(const int32_t& foo, std::string& bar, std::map< uint32_t, std::string >& baz);
+    virtual ::DBus::Variant Method_B(const ::DBus::Struct< int32_t, int32_t, uint32_t >& bar);
+    virtual void Method_C(const ::DBus::Struct< int32_t, int32_t, std::vector< ::DBus::Variant > >& bar);
 
 	void on_set_property(DBus::InterfaceAdaptor &interface, const std::string &property, const DBus::Variant &value);
 };
@@ -35,7 +39,34 @@ SampleService::~SampleService() {
 
 }
 
-void SampleService::Frobate(const int32_t& foo /*in*/, std::string& bar/*out*/, std::map< uint32_t, std::string >& baz/*out*/) {
+std::vector< uint8_t > SampleService::fbs(const std::vector< uint8_t >& payload) {
+
+	flatbuffers::FlatBufferBuilder builder;
+
+	// receive payload 
+	{
+		//const uint8_t* payload = &payload[0];
+		const Payload* p = GetPayload(&payload[0]);
+
+		std::cout << p->status() << std::endl;
+		std::cout << GetString(p->data()) << std::endl;
+	}
+
+	// create result
+	const uint8_t* result = nullptr;
+	int status = 0;
+	auto data = builder.CreateString("I receive your payload well.");
+
+	builder.Finish(CreateResult(builder, status, data));
+
+	result = builder.GetBufferPointer();
+
+	std::vector<uint8_t> dest(result, result+builder.GetSize());
+
+	return dest;
+}
+
+void SampleService::Method_A(const int32_t& foo /*in*/, std::string& bar/*out*/, std::map< uint32_t, std::string >& baz/*out*/) {
 
     baz.insert(make_pair(0, "Hi~"));
     baz.insert(make_pair(1, "Bye~"));
@@ -48,25 +79,25 @@ void SampleService::Frobate(const int32_t& foo /*in*/, std::string& bar/*out*/, 
 
 }
 
-::DBus::Variant SampleService::Bazify(const ::DBus::Struct< int32_t, int32_t, uint32_t >& bar) {
+::DBus::Variant SampleService::Method_B(const ::DBus::Struct< int32_t, int32_t, uint32_t >& bar) {
 	::DBus::Variant retVar;
 
 	/*
-	cout << "Called Bazify()" << endl;
+	cout << "Called Method_B()" << endl;
 	cout << "\tfirst (int32_t) 	: " << (int32_t)bar._1 << endl;
 	cout << "\tseond (int32_t)	: " << (int32_t)bar._2 << endl;
 	cout << "\tthird (uint32_t)	: " << (uint32_t)bar._3 << endl;
 	*/
 
 	::DBus::MessageIter m = retVar.writer();
- 	m.append_string("Hi, I'm Bazify from SampleService ..");
+ 	m.append_string("Hi, I'm Method_B from SampleService ..");
 
 	return retVar;
 }
-void SampleService::Mogrify(const ::DBus::Struct< int32_t, int32_t, std::vector< ::DBus::Variant > >& bar) {
+void SampleService::Method_C(const ::DBus::Struct< int32_t, int32_t, std::vector< ::DBus::Variant > >& bar) {
 
 	/*
-	cout << "Called Mogrify()" << endl;
+	cout << "Called Method_C()" << endl;
 	cout << "\tfirst (int32_t) 			: " << (int32_t)bar._1 << endl;
 	cout << "\tseond (int32_t)			: " << (int32_t)bar._2 << endl;
 	cout << "\tthird (vector of variant): " << endl;
@@ -83,11 +114,9 @@ void SampleService::on_set_property
 {
 	if (property == "Bar")
 	{
-		/*
 		uint8_t _value = value;
-		cout << "property value is changed : " << _value << endl;
-		*/
-
+		cout << "property value is changed by a client: " << _value << endl;
+		
 		Changed(true);
 	}
 }
@@ -121,17 +150,19 @@ int main()
 	std::future<void>fut = std::async(std::launch::async, [=] {
 		dispatcher.enter();
 	});
-								 
+	
+	/*
 	// emit Changed every seconds. 
 	// : false -> true -> false -> true -> ...
 	bool 	changedValue = false;
 	while ( true ) {
-		//printf("emit signal 'Changed' count : %d\n", count);
-		//service.Changed(changedValue=!changedValue);
+		// printf("emit signal 'Changed' count : %d\n", count);
+		changedValue = !changedValue;
+		service.Changed(changedValue);
 		//service.Changed(false);
 		sleep(1);
 	}
-
+	*/
 	return 0;
 }
 
