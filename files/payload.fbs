@@ -1,0 +1,6 @@
+table Payload{
+  status:int;
+  data:string;
+}
+
+root_type Payload;

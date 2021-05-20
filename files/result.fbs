@@ -1,0 +1,6 @@
+table Result{
+  status:int;
+  data:string;
+}
+
+root_type Result;

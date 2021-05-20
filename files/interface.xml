@@ -1,0 +1,33 @@
+        <!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+         "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+        <node name="/com/example/sample_service">
+          <interface name="com.example.SampleInterface">
+            <method name="fbs">
+              <arg name="payload" type="ay" direction="in"/>
+              <arg name="result" type="ay" direction="out"/>
+            </method>
+            <method name="Method_A">
+              <arg name="foo" type="i" direction="in"/>
+              <arg name="bar" type="s" direction="out"/>
+              <arg name="baz" type="a{us}" direction="out"/>
+              <annotation name="org.freedesktop.DBus.Deprecated" value="true"/>
+            </method>
+            <method name="Method_B">
+              <arg name="bar" type="(iiu)" direction="in"/>
+              <arg name="bar" type="v" direction="out"/>
+            </method>
+            <method name="Method_C">
+              <arg name="bar" type="(iiav)" direction="in"/>
+            </method>
+            <signal name="Changed">
+              <arg name="new_value" type="b"/>
+            </signal>
+            <signal name="PropertyChanged">
+              <arg type="s"/>
+              <arg type="v"/>
+            </signal>
+            <property name="Bar" type="y" access="readwrite"/>
+    			</interface>
+          <node name="child_of_sample_service"/>
+          <node name="another_child_of_sample_service"/>
+       </node>
