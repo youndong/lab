@@ -1,4 +1,4 @@
-# dbus-c-example
+# dbus-cxx-example
 
 This project is an example of server and client to deliver messages based on D-Bus using flatbuffers.
 
