@@ -7,9 +7,9 @@
 #include "service_proxy.h"
 #include "flatbuffers/flatbuffers.h"
 #include "payload_generated.h"
-#include "result_generated.h"
 
 using namespace std;
+using namespace Sample::Service;
 
 class SampleClient :	
 	public com::example::SampleInterface_proxy,
@@ -69,7 +69,7 @@ void* methods_test_thread(void* arg)
         const uint8_t* payload = nullptr;
         
         {
-            int status = 0;
+            Sample::Service::Status status = Sample::Service::Status_NO_ERROR;
             auto data = builder.CreateString("sample data....");
             builder.Finish(CreatePayload(builder, status, data));
 
@@ -78,7 +78,7 @@ void* methods_test_thread(void* arg)
             std::vector<uint8_t> fbs_Args(payload, payload+builder.GetSize());
             std::vector< uint8_t > ret1 = client->fbs(fbs_Args);
 	    
-        	const Result* r = GetResult(&ret1[0]);
+        	const Result* r = flatbuffers::GetRoot<Sample::Service::Result>(&ret1[0]);
 
 		    std::cout << r->status() << std::endl;
 		    std::cout << GetString(r->data()) << std::endl;          
