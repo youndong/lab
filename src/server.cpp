@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 #include "service_adaptor.h"
-#include "flatbuffers/flatbuffers.h"
+#include <flatbuffers/flatbuffers.h>
 #include "payload_generated.h"
 
 using namespace std;
@@ -52,6 +52,8 @@ std::vector< uint8_t > SampleService::fbs(const std::vector< uint8_t >& payload)
 		std::cout << GetString(p->data()) << std::endl;
 	}
 
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+
 	// create result
 	const uint8_t* result = nullptr;
 	Sample::Service::Status status = Sample::Service::Status_NO_ERROR;
@@ -66,7 +68,10 @@ std::vector< uint8_t > SampleService::fbs(const std::vector< uint8_t >& payload)
 	return dest;
 }
 
+// cmdline test using dbus-send
+// dbus-send --print-reply --session --dest=com.example.SampleInterface /com/example/sample_service com.example.SampleInterface.Method_A int32:1 &
 void SampleService::Method_A(const int32_t& foo /*in*/, std::string& bar/*out*/, std::map< uint32_t, std::string >& baz/*out*/) {
+
 
     baz.insert(make_pair(0, "Hi~"));
     baz.insert(make_pair(1, "Bye~"));
@@ -78,16 +83,17 @@ void SampleService::Method_A(const int32_t& foo /*in*/, std::string& bar/*out*/,
 		bar = "Invalid input number. Please contact .. youndong.park_at_gmail_dot_com";
 
 }
-
+std::mutex m1;
 ::DBus::Variant SampleService::Method_B(const ::DBus::Struct< int32_t, int32_t, uint32_t >& bar) {
 	::DBus::Variant retVar;
 
-	/*
+	std::lock_guard<std::mutex> lock_guard(m1);
+	
 	cout << "Called Method_B()" << endl;
 	cout << "\tfirst (int32_t) 	: " << (int32_t)bar._1 << endl;
 	cout << "\tseond (int32_t)	: " << (int32_t)bar._2 << endl;
 	cout << "\tthird (uint32_t)	: " << (uint32_t)bar._3 << endl;
-	*/
+	
 
 	::DBus::MessageIter m = retVar.writer();
  	m.append_string("Hi, I'm Method_B from SampleService ..");

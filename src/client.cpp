@@ -65,24 +65,102 @@ void* methods_test_thread(void* arg)
             cout << unsigned(ret1[0]) << endl;
         }
         */
-        flatbuffers::FlatBufferBuilder builder;
-        const uint8_t* payload = nullptr;
+
+
+        std::async([]{
+            
+            flatbuffers::FlatBufferBuilder builder;
+            const uint8_t* payload = nullptr;
+            
+            {
+                Sample::Service::Status status = Sample::Service::Status_NO_ERROR;
+                auto data = builder.CreateString(
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789"
+                    "0123456789");
+                builder.Finish(CreatePayload(builder, status, data));
+
+                payload = builder.GetBufferPointer();
+
+                std::vector<uint8_t> fbs_Args(payload, payload+builder.GetSize());
+                std::vector< uint8_t > ret1 = client->fbs(fbs_Args);
+            
+                const Result* r = flatbuffers::GetRoot<Sample::Service::Result>(&ret1[0]);
+
+                std::cout << r->status() << std::endl;
+                std::cout << GetString(r->data()) << std::endl;          
+            }
+            
+
+        });
         
-        {
-            Sample::Service::Status status = Sample::Service::Status_NO_ERROR;
-            auto data = builder.CreateString("sample data....");
-            builder.Finish(CreatePayload(builder, status, data));
-
-            payload = builder.GetBufferPointer();
-
-            std::vector<uint8_t> fbs_Args(payload, payload+builder.GetSize());
-            std::vector< uint8_t > ret1 = client->fbs(fbs_Args);
-	    
-        	const Result* r = flatbuffers::GetRoot<Sample::Service::Result>(&ret1[0]);
-
-		    std::cout << r->status() << std::endl;
-		    std::cout << GetString(r->data()) << std::endl;          
-        }
 
         //::DBus::MessageIter m = ret1.reader();
         
