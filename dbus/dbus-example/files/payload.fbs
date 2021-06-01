@@ -1,0 +1,13 @@
+namespace Sample.Service;
+
+enum Status:byte { NO_ERROR = 0, INVALID_PARAMS = 1, UNKNOWN_ERROR }
+
+table Payload{
+  status:Status = NO_ERROR;
+  data:string;
+}
+
+table Result{
+  status:Status = NO_ERROR;
+  data:string;
+}
